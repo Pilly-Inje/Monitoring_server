@@ -1,0 +1,73 @@
+{
+  "id": null,
+  "title": "FCM & Batch Monitoring",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "FCM Server Errors",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "fcm_server_errors_total",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Batch Server Errors",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "batch_server_errors_total",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ],
+  "schemaVersion": 37,
+  "version": 1
+}

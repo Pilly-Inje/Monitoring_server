@@ -17,6 +17,9 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/fcm_batch_dashboard.json:/var/lib/grafana/dashboards/fcm_batch_dashboard.json
     networks:
       - monitor-net
 
