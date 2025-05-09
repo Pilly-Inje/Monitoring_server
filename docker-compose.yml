@@ -20,6 +20,7 @@ services:
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/fcm_batch_dashboard.json:/var/lib/grafana/dashboards/fcm_batch_dashboard.json
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - monitor-net
 
@@ -28,6 +29,9 @@ services:
     container_name: alertmanager
     volumes:
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - ./.env
     ports:
       - "9093:9093"
     networks:
@@ -37,14 +41,13 @@ services:
     build:
       context: ./discord_webhook_relay
     container_name: discord_relay
-    environment:
-      - DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1370304118878502952/tn8_8pl14aTP0O6nj38w2h7z6FCYv3Sic8zCYr52zJZyd4wJRvh_hP9t3qFUiczk71D1
+    env_file:
+      - .env
     ports:
       - "9094:9094"
     networks:
       - monitor-net
 
-
-networks:
+networks:  
   monitor-net:
     driver: bridge
