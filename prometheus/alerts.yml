@@ -1,0 +1,20 @@
+groups:
+  - name: error_alerts
+    rules:
+      - alert: HighBatchErrors
+        expr: batch_server_errors_total > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Batch 서버 에러 발생!"
+          description: "총 에러 수: {{ $value }}"
+
+      - alert: HighFcmErrors
+        expr: fcm_server_errors_total > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "FCM 서버 에러 발생!"
+          description: "총 에러 수: {{ $value }}"
