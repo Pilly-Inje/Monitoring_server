@@ -1,73 +1,122 @@
 {
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
   "id": null,
-  "title": "FCM & Batch Monitoring",
-  "timezone": "browser",
   "panels": [
+    {
+      "type": "text",
+      "title": "실시간 모니터링 대시보드",
+      "gridPos": { "h": 2, "w": 24, "x": 0, "y": 0 },
+      "options": {
+        "mode": "markdown",
+        "content": "이 대시보드는 **FCM 서버** 및 **Batch 서버**의 에러 상태를 실시간으로 보여줍니다.\n- ✅ 정상 상태는 초록색\n- ❌ 오류 발생 시 빨간색으로 강조됩니다.\n-  10초마다 자동 새로고침"
+      },
+      "pluginVersion": "12.0.0"
+    },
     {
       "type": "stat",
       "title": "FCM Server Errors",
       "datasource": "Prometheus",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 2 },
       "targets": [
         {
-          "expr": "fcm_server_errors_total",
-          "format": "time_series"
+          "expr": "fcm_server_errors_total{job=\"fcm_server\", instance=\"host.docker.internal:3001\"}",
+          "format": "time_series",
+          "refId": "A"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "vertical",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "textMode": "value"
+      },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
-          "color": {
-            "mode": "thresholds"
-          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
+              { "color": "blue", "value": null },
               { "color": "red", "value": 1 }
             ]
-          }
-        }
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
-      "gridPos": {
-        "x": 0,
-        "y": 0,
-        "w": 12,
-        "h": 8
-      }
+      "pluginVersion": "12.0.0"
     },
     {
       "type": "stat",
       "title": "Batch Server Errors",
       "datasource": "Prometheus",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 2 },
       "targets": [
         {
-          "expr": "batch_server_errors_total",
-          "format": "time_series"
+          "expr": "batch_server_errors_total{job=\"batch_server\", instance=\"host.docker.internal:3002\"}",
+          "format": "time_series",
+          "refId": "B"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "vertical",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "textMode": "value"
+      },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
-          "color": {
-            "mode": "thresholds"
-          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
               { "color": "green", "value": null },
               { "color": "red", "value": 1 }
             ]
-          }
-        }
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 12,
-        "h": 8
-      }
+      "pluginVersion": "12.0.0"
     }
   ],
-  "schemaVersion": 37,
-  "version": 1
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["monitoring", "fcm", "batch"],
+  "templating": { "list": [] },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "FCM & Batch Monitoring",
+  "version": 1,
+  "uid": "fcm-batch-dashboard"
 }
